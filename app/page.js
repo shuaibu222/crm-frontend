@@ -1,106 +1,11 @@
-'use client'
-
-import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { useAppContext } from './components/States'
-
+import React from 'react'
 
 export default function Home() {
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
-  const [isCorrect, setIsCorrect] = useState(false)
-  const {setIsAuthenticated} = useAppContext()
-  const router = useRouter()
-
-  const handleLogin = async (e) => {
-
-    // const jwtToken = localStorage.getItem('token');
-  
-      // // Calculate the time until token expiration
-      // const tokenExpirationTime = decodeJwt(jwtToken).exp * 50000; // Convert to milliseconds
-      // const currentTime = new Date().getTime();
-  
-      // if (tokenExpirationTime - currentTime < 30000) {
-      //   // Token is close to expiration (30 seconds remaining), refresh it
-      //   const refreshToken = localStorage.getItem('refreshToken');
-  
-      //   if (refreshToken) {
-      //     // Send a request to your refresh token endpoint to get a new JWT token
-      //     const response = await fetch('http://localhost:8000/v1/api/refresh-token', {
-      //       method: 'POST',
-      //       headers: {
-      //         'Content-Type': 'application/json',
-      //       },
-      //       body: JSON.stringify({ refreshToken }),
-      //     });
-  
-      //     if (response.ok) {
-      //       const data = await response.json();
-      //       localStorage.setItem('token', data.newJwtToken);
-      //     } else {
-      //       console.error('Error refreshing token');
-      //     }
-      //   } else {
-      //     console.log("refresh token is not yet available");
-      //   }
-      // }
-      
-    e.preventDefault();
-    try {
-    const response = await fetch('http://localhost:8000/v1/api/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username, password }),
-      credentials: "include"
-    });
-
-    const data = await response.json();
-    
-
-    if (response.status === 200) {
-      localStorage.setItem("token", data.token)
-      router.push('/books');
-      setIsAuthenticated(true)
-      setIsCorrect(false)
-  
-    }
-  } catch (error) {
-    console.error(error);
-    setIsCorrect(true)
-  }};
 
 
   return (
-    <main className="flex min-h-screen flex-col p-24 max-w-7xl mx-auto my-0 gap-9">
-      {isCorrect && <h1 className='p-4 bg-white text-orange-600 rounded-lg mb-4 mt-4 self-center'>username or password is incorrect!</h1>}
-      <h1 className='text-4xl self-center'>Login</h1>
-      <form className="grid place-content-center gap-4">
-          <fieldset className='grid border-none gap-2'>
-            <label htmlFor="username">username: </label>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              name="text"
-              id="username"
-              className='w-full p-3 bg-black outline-none border-white border-2 rounded-md'
-            />
-          </fieldset>
-          <fieldset className='grid border-none gap-2' >
-            <label htmlFor="password">password: </label>
-            <input
-              type="text"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              name="text"
-              id="password"
-              className='w-full p-3 bg-black outline-none border-white border-2 rounded-md'
-            />
-          </fieldset>
-        </form>
-        <button type='submit' className='border-none p-3 bg-orange-500 cursor-pointer rounded-md self-center' onClick={handleLogin}>Login</button>
+    <main className={`grid place-content-center min-h-[70vh] max-w-7xl mx-auto my-0`}>
+      <h1 className='lg:text-7xl md:text-5xl text-xl bg-clip-text font-extrabold text-transparent bg-gradient-to-r from-yellow-500 to-orange-500'>CRM REST API in Spring Boot.</h1>
     </main>
   )
 }
